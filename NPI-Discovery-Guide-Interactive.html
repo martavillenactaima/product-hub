@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPI Process — Simplified Guide</title>
+<style>
+  :root{
+    --violet:#5B4FE9; --violet-dark:#3A30B5; --violet-deep:#241E6B; --violet-bg:#F0EEFE;
+    --mint:#2DD4A8; --mint-dark:#0E8C6D; --mint-bg:#E4FAF2;
+    --ink:#191831; --body:#3C3A55; --muted:#716E8A; --line:#E7E5F2;
+    --bg:#F6F5FB; --card:#FFFFFF;
+    --amber:#D97706; --amber-bg:#FDF0DC;
+    --shadow:0 1px 2px rgba(25,24,49,.05),0 6px 18px -8px rgba(25,24,49,.12);
+    --shadow-lg:0 2px 4px rgba(25,24,49,.06),0 14px 34px -10px rgba(36,30,107,.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.58;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px 90px}
+
+  /* ===== Hero ===== */
+  .hero{background:linear-gradient(130deg,var(--violet-deep) 0%,var(--violet-dark) 45%,var(--violet) 100%);border-radius:0 0 26px 26px;padding:42px 0 34px;margin:0 -22px 0;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(45,212,168,.22),transparent 65%);top:-220px;right:-120px}
+  .hero::after{content:"";position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 65%);bottom:-200px;left:-80px}
+  .hero-in{max-width:1000px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+  .kicker{font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--mint);font-weight:700}
+  .hero h1{font-size:34px;font-weight:800;color:#fff;margin:8px 0 8px;letter-spacing:-.5px}
+  .hero .sub{color:#C9C4F2;font-size:15px;max-width:660px}
+  .hero-stats{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+  .hstat{color:#fff}
+  .hstat b{font-size:22px;font-weight:800;display:block;line-height:1.1}
+  .hstat span{font-size:12px;color:#A9A3E8;letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+
+  /* ===== Progress ===== */
+  .progress{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:-26px 0 0;position:relative;z-index:2;box-shadow:var(--shadow-lg)}
+  .bar{flex:1;min-width:220px;height:10px;background:var(--violet-bg);border-radius:6px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--mint));border-radius:6px;transition:width .45s cubic-bezier(.22,1,.36,1)}
+  .ptext{font-size:13px;color:var(--body);font-weight:700;white-space:nowrap}
+  .pright{display:flex;gap:8px;align-items:center}
+  .ghostbtn{font-size:12px;font-weight:600;color:var(--muted);background:none;border:1px solid var(--line);border-radius:9px;padding:6px 12px;cursor:pointer;transition:.15s}
+  .ghostbtn:hover{color:var(--violet);border-color:var(--violet);background:var(--violet-bg)}
+  .hero-in{position:relative}
+  .hero-ctas{position:absolute;right:22px;bottom:0;display:flex;flex-direction:column;gap:9px;z-index:2;align-items:stretch}
+  .dlbtn{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:12px;border:1px solid rgba(255,255,255,.28);border-radius:11px;padding:9px 18px;cursor:pointer;transition:.18s;font-family:inherit;text-decoration:none;backdrop-filter:blur(4px);white-space:nowrap}
+  .dlbtn:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);transform:translateY(-1px)}
+  .dlbtn.primary{background:var(--mint);color:#0B3D30;border-color:var(--mint)}
+  .dlbtn.primary:hover{background:#3BE0B6}
+  @media(max-width:880px){.hero-ctas{position:static;margin:20px 22px 0;flex-direction:row;flex-wrap:wrap;align-items:flex-start}}
+
+  /* ===== Tabs ===== */
+  .tabbar{position:sticky;top:0;z-index:10;background:rgba(246,245,251,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:0 -22px;padding:14px 22px 12px;border-bottom:1px solid var(--line)}
+  .tabs{display:flex;gap:7px;flex-wrap:wrap;max-width:1000px;margin:0 auto}
+  .tab{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:.16s;font-family:inherit}
+  .tab .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.45}
+  .tab:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-1px)}
+  .tab.active{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:var(--shadow)}
+  .tab.active .dot{background:var(--mint);opacity:1}
+  .panel{display:none;animation:fade .3s;padding-top:22px}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* ===== Overview ===== */
+  .glance{width:100%;border-collapse:separate;border-spacing:0;margin:4px 0 18px;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .glance th{background:var(--violet-deep);color:#fff;text-align:left;padding:12px 18px;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase}
+  .glance td{padding:13px 18px;border-top:1px solid var(--line);font-size:14px;vertical-align:top;color:var(--body)}
+  .glance td:first-child{font-weight:700;white-space:nowrap;color:var(--ink)}
+  .glance tr td .ph-ico{display:inline-flex;width:26px;height:26px;border-radius:8px;align-items:center;justify-content:center;margin-right:9px;font-size:13px;vertical-align:middle}
+  .principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:18px 0}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);transition:.18s}
+  .pcard:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .pcard .n{width:32px;height:32px;border-radius:10px;background:var(--violet-bg);color:var(--violet);font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:14px}
+  .pcard h3{font-size:15px;margin-bottom:6px}
+  .pcard p{font-size:13.5px;color:var(--muted)}
+  .corebox{background:linear-gradient(120deg,var(--mint-bg),#F0FDF8);border:1px solid #BCEBDB;border-radius:16px;padding:18px 20px;margin:18px 0;font-size:14px;color:var(--body);box-shadow:var(--shadow)}
+  .corebox b{color:var(--mint-dark)}
+  .filebox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin:14px 0;font-size:13.5px;color:var(--muted);box-shadow:var(--shadow)}
+  code{background:var(--violet-bg);color:var(--violet-dark);padding:1px 7px;border-radius:6px;font-size:.9em;font-family:Consolas,'SF Mono',monospace}
+
+  /* ===== Phase header ===== */
+  .phase-head{display:flex;align-items:center;gap:14px;margin:6px 0 18px}
+  .ph-badge{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:var(--shadow)}
+  .phase-head h2{font-size:21px;letter-spacing:-.3px}
+  .phase-head p{color:var(--muted);font-size:13.5px;font-style:italic;margin-top:1px}
+
+  /* ===== Step cards ===== */
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:13px 0;overflow:hidden;box-shadow:var(--shadow);transition:border-color .18s, box-shadow .18s}
+  .step:hover{box-shadow:var(--shadow-lg)}
+  .step.done{border-color:#9FE5CE;background:linear-gradient(0deg,rgba(228,250,242,.35),rgba(228,250,242,.35)),#fff}
+  .step-head{display:flex;align-items:center;gap:14px;padding:17px 20px;cursor:pointer;user-select:none}
+  .snum{min-width:40px;height:40px;border-radius:12px;background:var(--violet-bg);color:var(--violet);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.18s}
+  .step.done .snum{background:var(--mint);color:#fff}
+  .stitle{flex:1;min-width:0}
+  .stitle h3{font-size:16px;letter-spacing:-.2px}
+  .stitle .meta{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:.7px;padding:4px 10px;border-radius:999px;text-transform:uppercase;white-space:nowrap}
+  .badge.core{background:var(--amber-bg);color:var(--amber)}
+  .badge.flex{background:var(--violet-bg);color:var(--violet)}
+  .badge.launch{background:#FCE7F3;color:#BE185D}
+  .badge.live{background:#E0F2FE;color:#0369A1}
+  .chk{width:24px;height:24px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;background:#fff;font-size:13px;color:#fff;transition:.18s}
+  .chk:hover{border-color:var(--mint);transform:scale(1.08)}
+  .step.done .chk{background:var(--mint);border-color:var(--mint)}
+  .chev{color:var(--muted);transition:transform .22s;font-size:12px;margin-left:2px}
+  .step.open .chev{transform:rotate(180deg)}
+  .step-body{display:none;padding:0 22px 22px 74px}
+  .step.open .step-body{display:block;animation:fade .25s}
+  .sec{margin:10px 0}
+  .sec h4{font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--violet);margin-bottom:6px;font-weight:700}
+  .sec p,.sec li{font-size:14px;color:var(--body)}
+  .sec ul{padding-left:20px;margin-top:5px}
+  .sec li{margin:5px 0}
+  .fmt{background:var(--violet-bg);border-radius:10px;padding:12px 15px;font-family:Consolas,'SF Mono',monospace;font-size:12.8px;color:var(--violet-dark);margin:9px 0;line-height:1.5}
+  .simp{background:var(--mint-bg);border-left:3px solid var(--mint);border-radius:0 12px 12px 0;padding:12px 15px;margin:13px 0;font-size:13.8px;color:var(--body)}
+  .simp b{color:var(--mint-dark)}
+  .kq{background:linear-gradient(120deg,var(--ink),#2A2752);color:#E9E7F7;border-radius:12px;padding:13px 17px;margin-top:15px;font-size:13.8px;box-shadow:var(--shadow)}
+  .kq b{color:var(--mint)}
+  .minitable{width:100%;border-collapse:collapse;margin:9px 0;font-size:13px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .minitable th{text-align:left;background:var(--violet-bg);color:var(--violet-dark);padding:8px 11px;font-size:11.5px;letter-spacing:.5px;text-transform:uppercase}
+  .minitable td{padding:8px 11px;border-top:1px solid var(--line);color:var(--body);vertical-align:top}
+  @media(max-width:640px){.step-body{padding:0 18px 18px}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-in">
+    <div class="hero-ctas">
+      <button class="dlbtn primary" onclick="downloadSkill()">⬇ Download Claude skill</button>
+      <a class="dlbtn" href="NPI-Process-Slides.pptx" download>⬇ Download NPI slides (.pptx)</a>
+    </div>
+    <div class="kicker">Hg Product Manager Academy · NPI Process</div>
+    <h1>NPI Process — Simplified Guide</h1>
+    <p class="sub">The full process, Steps 1–15: Discovery → Validation → NPI → Driving Adoption → Roadmap & Outcomes. For first iterations — learn the way of thinking, not perfection in every box.</p>
+    <div class="hero-stats">
+      <div class="hstat"><b>5</b><span>Phases</span></div>
+      <div class="hstat"><b>15</b><span>Steps</span></div>
+      <div class="hstat"><b>5</b><span>Core steps</span></div>
+      <div class="hstat"><b>15</b><span>Output files</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="progress">
+  <div class="bar"><i id="barfill"></i></div>
+  <span class="ptext" id="ptext">0 / 15 steps done</span>
+  <div class="pright">
+    <button class="ghostbtn" onclick="expandAll(true)">Expand all</button>
+    <button class="ghostbtn" onclick="expandAll(false)">Collapse</button>
+    <button class="ghostbtn" onclick="resetProgress()">Reset progress</button>
+  </div>
+</div>
+
+<div class="tabbar"><div class="tabs">
+  <button class="tab active" data-panel="p0"><span class="dot"></span>Overview</button>
+  <button class="tab" data-panel="p1"><span class="dot"></span>1 · Discovery</button>
+  <button class="tab" data-panel="p2"><span class="dot"></span>2 · Validation</button>
+  <button class="tab" data-panel="p3"><span class="dot"></span>3 · NPI</button>
+  <button class="tab" data-panel="p4"><span class="dot"></span>4 · Adoption</button>
+  <button class="tab" data-panel="p5"><span class="dot"></span>5 · Roadmap</button>
+</div></div>
+
+<!-- ============ OVERVIEW ============ -->
+<div class="panel show" id="p0">
+  <table class="glance">
+    <tr><th>Phase</th><th>Steps</th><th>What you walk away with</th></tr>
+    <tr><td><span class="ph-ico" style="background:var(--violet-bg)">🔍</span>1 · Discovery</td><td>1–5</td><td>Who the user is, how they work today, what hurts most, and the outcome you're aiming for</td></tr>
+    <tr><td><span class="ph-ico" style="background:var(--mint-bg)">🧪</span>2 · Validation</td><td>6–10</td><td>A sharp business case, bold ideas, and a prototype that tests your riskiest assumption</td></tr>
+    <tr><td><span class="ph-ico" style="background:#FCE7F3">🚀</span>3 · NPI</td><td>11–12</td><td>What marketing, sales and CS need to launch it</td></tr>
+    <tr><td><span class="ph-ico" style="background:#E0F2FE">📈</span>4 · Driving Adoption</td><td>13–14</td><td>A dashboard that tells you if it's working, and levers to act when it isn't</td></tr>
+    <tr><td><span class="ph-ico" style="background:var(--amber-bg)">🎯</span>5 · Roadmap & Outcomes</td><td>15</td><td>An honest audit of your roadmap and the bet actually worth making</td></tr>
+  </table>
+
+  <div class="principles">
+    <div class="pcard"><div class="n">1</div><h3>Loops, not straight lines</h3><p>Go back to any step when new information changes your thinking. That's the process working, not failing.</p></div>
+    <div class="pcard"><div class="n">2</div><h3>Order beats depth</h3><p>Each step builds on the previous one. A light pass through all steps beats a perfect pass through two.</p></div>
+    <div class="pcard"><div class="n">3</div><h3>Evidence over opinion</h3><p>At every step ask: do I <i>know</i> this from customers, or am I <i>assuming</i> it? Both are fine — but label them.</p></div>
+  </div>
+
+  <div class="corebox">⭐ <b>First time? The core path.</b> If you only have time for the essentials, don't skip <b>Step 3 (Transcripts), Step 4 (Pain Map), Step 5 (North Star), Step 6 (Product Brief) and Step 10 (Prototype)</b>. Steps 1–2 can be light; Steps 7–9 enrich your ideas; Steps 11–12 matter when heading to launch; Steps 13–14 kick in once live; Step 15 works at any time — it's a roadmap audit, not a launch step.</div>
+
+  <div class="filebox">📁 <b style="color:var(--ink)">Deliverables & naming convention:</b> each step produces one document — in <b>.md</b> or in <b>Confluence</b>, your choice per step. Every title follows the same pattern: <code>NN Step Name — Feature</code>.<br><br>
+<b style="color:var(--ink)">Example — feature "Marketplace Tiering":</b><br>
+· Confluence page: <code>03 Transcript Analysis — Marketplace Tiering</code><br>
+· Markdown file: <code>03-transcript-analysis-marketplace-tiering.md</code> (title in kebab-case)<br><br>
+Keep everything for one feature in the same folder / Confluence parent page — later steps read earlier deliverables, and the AI companion finds them by this naming pattern.</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<div class="panel" id="p1">
+  <div class="phase-head">
+    <div class="ph-badge" style="background:var(--violet-bg)">🔍</div>
+    <div><h2>Phase 1 — Discovery</h2><p>Understand users, workflows and pain before building anything.</p></div>
+  </div>
+
+  <div class="step" data-step="1">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">1</div>
+      <div class="stitle"><h3>JTBD Review</h3><div class="meta">Deliverable: <code>01 JTBD Review — [Feature]</code></div></div>
+      <span class="badge flex">flexible</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>A Job to be Done is the progress a user is trying to make in a specific circumstance — not a feature request. The job exists regardless of your product. Acid test: <i>"Would this job still exist if our product disappeared?"</i></p>
+      <div class="fmt">When [situation], I want to [motivation], so I can [expected outcome].</div>
+      <ul>
+        <li><b>Functional</b> — what they need to accomplish</li>
+        <li><b>Emotional</b> — how they want to feel (confidence, relief, control)</li>
+        <li><b>Social</b> — how they want to be seen (competent, thorough)</li>
+      </ul>
+      <p style="margin-top:8px">The last two often drive adoption more than the first. Watch out for features disguised as jobs ("I want a dashboard") and several jobs mashed into one vague statement.</p></div>
+      <div class="simp"><b>Simplified version:</b> write 2–3 JTBD, tag each one <i>evidence</i> or <i>assumption</i>, and rank them. That's enough.</div>
+      <div class="kq"><b>Key question:</b> which JTBD is grounded in real customer evidence — and which is a hypothesis I'm carrying in?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="2">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">2</div>
+      <div class="stitle"><h3>Workflow Map</h3><div class="meta">Deliverable: <code>02 Workflow Map — [Feature]</code></div></div>
+      <span class="badge flex">flexible</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>You cannot reimagine what you don't understand. Map how the user gets the job done <b>today</b> — including everything outside your product. The invisible steps (the email thread, the side spreadsheet, the Slack ping) are where your real competition lives: not another tool, but the workaround.</p>
+      <p style="margin-top:8px">Map across five dimensions: <b>Phase · Doing · Thinking &amp; Feeling · Touchpoints · Opportunities</b>. Then find the emotional peaks and valleys — the lowest point is usually where the biggest opportunity lives.</p></div>
+      <div class="simp"><b>Simplified version:</b> pick ONE user and ONE job. Narrate the journey in plain language — the AI structures the table. Just answer the two key questions.</div>
+      <div class="kq"><b>Key questions:</b> which steps of this journey do I never see? Where are the highest and lowest points?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="3">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">3</div>
+      <div class="stitle"><h3>Transcript Analysis</h3><div class="meta">Deliverable: <code>03 Transcript Analysis — [Feature]</code></div></div>
+      <span class="badge core">★ core</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Let real customer conversations tell you where the pain is. The AI surfaces 5–8 recurring themes with quotes and frequency — but <b>you define the taxonomy</b>. Whoever owns the taxonomy owns the framing of the problem space.</p>
+      <ul>
+        <li><b>Strategies &gt; Challenges.</b> The workarounds users already built reveal more than their complaints.</li>
+        <li><b>Underlying pains</b> — implicit, never stated directly. The insights competitors miss.</li>
+        <li><b>Emotional signals</b> predict willingness-to-pay. Listen for <i>"every single time…"</i>, <i>"I can't believe we still…"</i></li>
+      </ul>
+      <p style="margin-top:8px">Finish with a <b>devil's advocate pass</b>: alternative explanations? Preferences disguised as problems? What would a skeptic push back on?</p></div>
+      <div class="simp"><b>Simplified version:</b> even 3–5 transcripts work. Themes + quotes + your taxonomy is the minimum; the full tagged table can come in a second pass.</div>
+      <div class="kq"><b>Key question:</b> what pain do I know exists that didn't show up here?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="4">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">4</div>
+      <div class="stitle"><h3>Pain Mapping</h3><div class="meta">Deliverable: <code>04 Pain Mapping — [Feature]</code></div></div>
+      <span class="badge core">★ core</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Plot every pain on a 2×2: <b>Frequency</b> (daily / weekly / occasionally) × <b>Friction</b> (workaround / manual / blocked). Top-right — high friction, high frequency — is where the value is.</p>
+      <p style="margin-top:8px">Then pick <b>one anchor pain</b>. Not the only pain you'll ever solve — the one that anchors your product brief, north star and narrative. Scattered focus produces scattered products.</p>
+      <p style="margin-top:8px"><b>Intuition check:</b> does the ranking match what you hear in sales calls and CS escalations? If not, investigate. If you change the anchor later, change it <i>explicitly</i> — never let it drift silently.</p></div>
+      <div class="kq"><b>Key question:</b> does this ranking match my intuition? What feels more important than where it landed?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="5">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">5</div>
+      <div class="stitle"><h3>User Outcome &amp; North Star</h3><div class="meta">Deliverable: <code>05 User Outcome &amp; North Star — [Feature]</code></div></div>
+      <span class="badge core">★ core</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Turn the anchor pain into two statements everything downstream traces back to.</p>
+      <div class="fmt">[User segment] needs [user outcome] so that [value/impact].</div>
+      <p>Checks: ① the segment also says who you're <b>NOT</b> targeting ② the outcome is a result, not a feature in disguise ③ the impact is testable.</p>
+      <div class="fmt">We hypothesize that if [segment] can [achieve outcome] through [core behaviour], as measured by [North Star Metric], we will drive [business outcome].</div>
+      <p>Connect to one of the five value drivers — <b>GRR · NRR · NCA · AOV · WR</b> — with a number. "Improve retention" is not an outcome; "improve GRR from 85% to 90% in 6 months" is. <b>Vague outcomes can't fail — so they can't teach you anything.</b></p></div>
+      <div class="kq"><b>Key question:</b> is this outcome valuable enough that the user will actually change their behaviour?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 2 ============ -->
+<div class="panel" id="p2">
+  <div class="phase-head">
+    <div class="ph-badge" style="background:var(--mint-bg)">🧪</div>
+    <div><h2>Phase 2 — Validation</h2><p>Build the case, test assumptions — earn the right to build.</p></div>
+  </div>
+
+  <div class="step" data-step="6">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">6</div>
+      <div class="stitle"><h3>Product Brief</h3><div class="meta">Deliverable: <code>06 Product Brief — [Feature]</code></div></div>
+      <span class="badge core">★ core</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Crystallize Phase 1 into a sharp business case — not a 50-page PRD. Six sections, each with a specificity bar:</p>
+      <table class="minitable">
+        <tr><th>Section</th><th>The bar to clear</th></tr>
+        <tr><td>Problem Statement</td><td>[role] does [X] in [context], takes [time] or fails [rate]</td></tr>
+        <tr><td>Target User</td><td>role + company type + the <i>moment</i> the problem occurs</td></tr>
+        <tr><td>User Outcome</td><td>[user] does [X] in [timeframe] with [quality measure]</td></tr>
+        <tr><td>Product Outcome</td><td>[X%] of [segment] doing [behaviour] by [date]</td></tr>
+        <tr><td>Business Outcome</td><td>value driver + <b>a monetary figure</b> (rough is fine)</td></tr>
+        <tr><td>Competitive Landscape</td><td>[X%] use [alt] — none solve [gap] because [structural reason]</td></tr>
+      </table>
+      <p>The brief is a <b>hypothesis engine</b>. Close by naming your <b>2 weakest assumptions</b> + a quick validation test for each — days, not weeks.</p></div>
+      <div class="kq"><b>Key question:</b> does my business outcome have a number attached? If not, what's my best estimate?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="7">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">7</div>
+      <div class="stitle"><h3>Workflow Re-imagination</h3><div class="meta">Deliverable: <code>07 Workflow Re-imagination — [Feature]</code></div></div>
+      <span class="badge flex">flexible</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Take the Step 2 map and reimagine it AI-first. Classify each stage:</p>
+      <ul>
+        <li><b>Automated</b> — AI end-to-end (only where errors are cheap)</li>
+        <li><b>Augmented</b> — AI assists, human in the loop (where judgment matters)</li>
+        <li><b>Eliminated</b> — no longer needed. <b>The highest-value outcome.</b></li>
+        <li><b>Unchanged</b> — human judgment non-negotiable</li>
+      </ul>
+      <p style="margin-top:8px">Weigh per stage: regulation, data availability, user trust, feasibility <i>today</i>. <b>The ambition test:</b> if it just makes steps 20% faster, you're thinking incrementally — what if a junior with AI could do what a senior does today? The biggest current-vs-reimagined gap = your product opportunity.</p></div>
+      <div class="kq"><b>Key question:</b> does this eliminate steps entirely, or change who does the work?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="8">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">8</div>
+      <div class="stitle"><h3>Crazy 8s + AI Ideation</h3><div class="meta">Deliverable: <code>08 Crazy 8s &amp; AI Ideation — [Feature]</code></div></div>
+      <span class="badge flex">flexible</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>8 ideas in 8 minutes, one line each, no filtering. At least 2 must be impossible without AI. The discipline is <b>speed, not quality</b> — filtering too early kills the best ideas, because the best ideas sound unreasonable at first. Judgment comes in Step 9.</p>
+      <p style="margin-top:8px">Then let the AI find what's missing (ideas that eliminate a step, AI-first paradigms, adjacent-industry solutions, ideas that change <i>who</i> does the work) and stretch you with: <b>MacGyver Mindset</b> (strip domain labels, reassemble the parts), <b>Synectics</b> (force an analogy from another domain), <b>Opposite Thinking</b> (design the most frustrating version, flip each into a principle).</p></div>
+      <div class="kq"><b>Key question:</b> which direction feels worth pursuing? Does anything combine with one of my original 8?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="9">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">9</div>
+      <div class="stitle"><h3>Opportunity Solution Tree</h3><div class="meta">Deliverable: <code>09 Opportunity Solution Tree — [Feature]</code></div></div>
+      <span class="badge flex">flexible</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>One tree: business outcome at the trunk → 3–5 opportunities as branches (framed as <i>"users struggle with…"</i>, grounded in Steps 3–4) → sub-opportunities → your Crazy 8s ideas as leaves (hypotheses, not commitments).</p>
+      <p style="margin-top:8px">Two diagnostics fall out automatically:</p>
+      <ul>
+        <li><b>Ideas mapping to no opportunity</b> = solutions looking for a problem → park them.</li>
+        <li><b>Opportunities with no ideas</b> = your next ideation focus — more valuable than your current best ideas.</li>
+      </ul></div>
+      <div class="simp"><b>Simplified version:</b> a simple indented list is fine — the structure matters, not the drawing. It's a living document.</div>
+      <div class="kq"><b>Key question:</b> any opportunities with nothing underneath? That's my discovery gap.</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="10">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">10</div>
+      <div class="stitle"><h3>Prototype</h3><div class="meta">Deliverable: <code>10 Prototype Scope — [Feature]</code></div></div>
+      <span class="badge core">★ core</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Prototype the idea you're most <b>uncertain</b> about — not the one you like best. A prototype exists to reduce risk; the riskiest idea teaches you the most. Prototyping what you're already confident about is seeking validation, not learning.</p>
+      <p style="margin-top:8px">Answer before building:</p>
+      <ul>
+        <li>What is the single most important interaction to test?</li>
+        <li>What must a user see or do <b>in 2 minutes</b> to judge the concept?</li>
+        <li><b>What's the riskiest assumption this tests?</b> ← can't answer? You're building a demo, not a prototype.</li>
+      </ul>
+      <p style="margin-top:8px">Build with an AI tool (a Claude Artifact is enough). Match fidelity to the assumption: low-fi tests viability, hi-fi tests usability. Before engineering: what numbers must be right? What data does it depend on? What happens when data is missing?</p></div>
+      <div class="kq"><b>Key question:</b> what's the riskiest assumption this prototype should test?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 3 ============ -->
+<div class="panel" id="p3">
+  <div class="phase-head">
+    <div class="ph-badge" style="background:#FCE7F3">🚀</div>
+    <div><h2>Phase 3 — New Product Introduction</h2><p>Arm product marketing, sales, CS and support.</p></div>
+  </div>
+
+  <div class="step" data-step="11">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">11</div>
+      <div class="stitle"><h3>Value Proposition Brief</h3><div class="meta">Deliverable: <code>11 Value Proposition Brief — [Feature]</code></div></div>
+      <span class="badge launch">at launch</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Translate discovery into what PMM and Sales need: target segment &amp; personas · the problem and today's workarounds · what success looks like · the three JTBD dimensions · value drivers in money · competitive positioning.</p>
+      <p style="margin-top:8px">Two rules make or break it:</p>
+      <ul>
+        <li><b>Success in the customer's words, not yours.</b> Pull exact phrases from transcripts. If your positioning uses words no customer ever said, it describes what you <i>want</i> the product to be.</li>
+        <li><b>Show the math.</b> "Saves time" is not a value driver. "Saves 4 h/analyst/week × €95/h ≈ €19,760/analyst/year" is. A rough number that can be challenged beats a vague claim that can't be questioned.</li>
+      </ul>
+      <p style="margin-top:8px">Position on <b>structural gaps</b> ("X can't do this because their architecture requires…") — execution gaps ("we're faster") just invite a response.</p></div>
+      <div class="kq"><b>Key question:</b> are the € amounts specific enough to be challenged?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="12">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">12</div>
+      <div class="stitle"><h3>Launch FAQ</h3><div class="meta">Deliverable: <code>12 Launch FAQ — [Feature]</code></div></div>
+      <span class="badge launch">at launch</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>One source of truth for every GTM team. Ten sections: overview &amp; pitch · target market and ICP (<b>who NOT to sell to</b> matters as much) · pricing · positioning per competitor · implementation · client success signals · support playbook · AI FAQs · objection handling · GTM readiness checklist.</p>
+      <p style="margin-top:8px">The two sections deserving most care:</p>
+      <ul>
+        <li><b>AI FAQs (non-negotiable with AI features):</b> accuracy &amp; evals, hallucination safeguards, data handling, explainability, liability. Sales and CS will get these questions before you expect them.</li>
+        <li><b>Objections:</b> top 5 from <i>real</i> win/loss — acknowledge → reframe with evidence → bridge to proof point.</li>
+      </ul>
+      <p style="margin-top:8px">In the readiness checklist, separate <i>"must be true before any customer sees this"</i> from <i>"should be true before scaling"</i>.</p></div>
+      <div class="simp"><b>Simplified version:</b> start with overview, ICP and objections; use [placeholder] everywhere else and fill in as launch approaches.</div>
+      <div class="kq"><b>Key question:</b> could my team actually deliver the AI FAQ answers today?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 4 ============ -->
+<div class="panel" id="p4">
+  <div class="phase-head">
+    <div class="ph-badge" style="background:#E0F2FE">📈</div>
+    <div><h2>Phase 4 — Driving Adoption</h2><p>Adoption is now a core PM responsibility — not a handoff to Sales and CS.</p></div>
+  </div>
+
+  <div class="step" data-step="13">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">13</div>
+      <div class="stitle"><h3>Metrics &amp; Adoption Dashboard</h3><div class="meta">Deliverable: <code>13 Metrics &amp; Adoption Dashboard — [Feature]</code></div></div>
+      <span class="badge live">once live</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>Derive the <b>outcome chain</b> — three linked layers everything else hangs on:</p>
+      <ul>
+        <li><b>User outcome</b> — what behaviour change are you driving?</li>
+        <li><b>Product outcome</b> — what does adoption look like at scale? (your North Star metric)</li>
+        <li><b>Business outcome</b> — which value driver moves, and by how much in €?</li>
+      </ul>
+      <p style="margin-top:8px">Then build the dashboard: health status · outcome chain metrics · <b>leading indicators</b> (predict the North Star before lagging data shows it — each one defines the action it triggers if it drops) · <b>lagging indicators</b> (business outcomes in € — they confirm, but arrive too late to act on) · qualitative signals · action items.</p>
+      <p style="margin-top:8px"><b>Vanity metric rule:</b> any metric that can't connect to the outcome chain is a vanity metric ("active users" without defining active, usage counts without outcome correlation). Flag them explicitly.</p>
+      <p style="margin-top:8px"><b>AI features?</b> Add AI health: acceptance rate, edit distance, regeneration rate, thumbs-down by query type, failure mode alerts. Low acceptance isn't just a quality issue — it's an adoption risk.</p></div>
+      <div class="simp"><b>Simplified version:</b> start with just the outcome chain + 2–3 leading indicators with triggers. Where you can't measure, flag an <i>instrumentation gap</i> — don't fill in generic metrics.</div>
+      <div class="kq"><b>Key question:</b> can every metric on this dashboard connect to the outcome chain?</div>
+    </div>
+  </div>
+
+  <div class="step" data-step="14">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">14</div>
+      <div class="stitle"><h3>Activation Levers</h3><div class="meta">Deliverable: <code>14 Activation Levers — [Feature]</code></div></div>
+      <span class="badge live">once live</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>An adoption plan across three lever types, each owned by a different part of the pod:</p>
+      <table class="minitable">
+        <tr><th>Lever type</th><th>Owner</th><th>Examples</th></tr>
+        <tr><td>Digital adoption motions</td><td>Product Marketing</td><td>Email nurture by segment &amp; activation status, in-app onboarding, weekly tips</td></tr>
+        <tr><td>High-touch engagement</td><td>Customer Success</td><td>1:1 consulting, Lunch &amp; Learns, advisory groups — stratify accounts by LTV × activity (high LTV + low activity = top priority)</td></tr>
+        <tr><td>Product-led interventions</td><td>Design &amp; Engineering</td><td>Feature parity blockers, UX simplification of high drop-off flows, research with power AND churned users</td></tr>
+      </table>
+      <p style="margin-top:8px"><b>The rule that makes it real — triggers.</b> For each lever, define the dashboard signal that fires it: <i>"if weekly active usage drops below X for a high-LTV account, CS schedules a check-in within 48 h."</i> An activation plan without triggers is a wish list.</p>
+      <p style="margin-top:8px">One-size-fits-all nurture signals that you don't understand your users — different segments need different messages at different times.</p></div>
+      <div class="kq"><b>Key questions:</b> which lever surprised you? Which segment is most at risk right now — where would you act first?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PHASE 5 ============ -->
+<div class="panel" id="p5">
+  <div class="phase-head">
+    <div class="ph-badge" style="background:var(--amber-bg)">🎯</div>
+    <div><h2>Phase 5 — Roadmap &amp; Outcomes</h2><p>Look at your roadmap honestly and decide what bet is actually worth making.</p></div>
+  </div>
+
+  <div class="step" data-step="15">
+    <div class="step-head" onclick="toggleStep(this)">
+      <div class="snum">15</div>
+      <div class="stitle"><h3>Evidence Audit &amp; The Bigger Bet</h3><div class="meta">Deliverable: <code>15 Evidence Audit &amp; The Bigger Bet — [Feature]</code></div></div>
+      <span class="badge flex">anytime</span>
+      <div class="chk" onclick="toggleDone(event,this)">✓</div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="step-body">
+      <div class="sec"><h4>The idea</h4><p>The capstone. Audit every roadmap item across three dimensions:</p>
+      <ul>
+        <li><b>Discovery</b> — grounded in a high-friction, high-frequency pain from real evidence, or a stated wish / internal assumption?</li>
+        <li><b>Validation</b> — has the riskiest assumption been tested? Could it be prototyped in a week before committing engineering?</li>
+        <li><b>Adoption</b> — user/product/business outcome metrics defined, in €, with telemetry in place? (AI feature → eval plan?)</li>
+      </ul>
+      <p style="margin-top:8px">Label each item: <b>Grounded</b> · <b>Plausible but untested</b> · <b>On the roadmap for other reasons</b> (stakeholder request, competitive parity, legacy commitment — not inherently wrong, but it needs honest labelling).</p></div>
+      <div class="sec"><h4>The three bets</h4>
+      <ul>
+        <li><b>The Rescoped Bet</b> — take the strongest-evidence item. Does the scope match the size of the pain, or are you solving a slice when evidence points to something bigger?</li>
+        <li><b>The Invested Bet</b> — take the weakest-evidence item. Instead of building or cutting: what investment (discovery, prototyping, telemetry, EAP) would let you make a real decision next quarter? Specific: what, who, when.</li>
+        <li><b>The Capability Bet</b> — what pattern do the gaps reveal? Mostly discovery gaps = under-investing in understanding users. Mostly validation gaps = shipping too fast. Mostly adoption gaps = under-investing in instrumentation. Name the capability — and one concrete action in the next 30 days.</li>
+      </ul></div>
+      <div class="kq"><b>Key question:</b> which roadmap item did I walk in most confident about — and feel least confident about now?</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.panel).classList.add('show');
+  });
+});
+
+// Accordion
+function toggleStep(head){ head.parentElement.classList.toggle('open'); }
+function expandAll(open){
+  document.querySelectorAll('.panel.show .step').forEach(s=>s.classList.toggle('open', open));
+}
+
+// Progress (persists in browser if possible)
+const TOTAL = 15;
+let store = {};
+try { store = JSON.parse(localStorage.getItem('npi-progress')||'{}'); } catch(e){ store = {}; }
+
+function applyState(){
+  let done = 0;
+  document.querySelectorAll('.step').forEach(s=>{
+    const id = s.dataset.step;
+    if(store[id]){ s.classList.add('done'); done++; } else { s.classList.remove('done'); }
+  });
+  document.getElementById('barfill').style.width = (done/TOTAL*100)+'%';
+  document.getElementById('ptext').textContent = done+' / '+TOTAL+' steps done';
+}
+
+function toggleDone(ev, el){
+  ev.stopPropagation();
+  const step = el.closest('.step');
+  store[step.dataset.step] = !store[step.dataset.step];
+  try { localStorage.setItem('npi-progress', JSON.stringify(store)); } catch(e){}
+  applyState();
+}
+
+function resetProgress(){
+  store = {};
+  try { localStorage.removeItem('npi-progress'); } catch(e){}
+  applyState();
+}
+
+applyState();
+
+// ===== Embedded Claude skill (npi-process.skill, base64) =====
+const SKILL_B64 = "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";
+function downloadSkill(){
+  const bytes = Uint8Array.from(atob(SKILL_B64), c => c.charCodeAt(0));
+  const blob = new Blob([bytes], {type:'application/zip'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'npi-process.skill';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
