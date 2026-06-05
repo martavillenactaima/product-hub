@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIGA-7 — Mandatory Risks · Business Delivery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --v:#7346FF;--vd:#5528E8;--vbg:#DED8F7;
+  --m:#00E384;--md:#0a7a5a;--mbg:#D2F3E4;
+  --dk:#1A3037;
+  --body:#3C4852;--muted:#6B7280;--line:#EBEBEB;
+  --bg:#F5F5F5;--card:#FFFFFF;
+  --amber:#D97706;--amber-bg:#FEF3C7;
+  --sh:0 1px 3px rgba(26,48,55,.06),0 6px 18px -6px rgba(26,48,55,.1);
+  --sh-lg:0 2px 6px rgba(26,48,55,.06),0 16px 36px -10px rgba(115,70,255,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--dk);line-height:1.58;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px 90px}
+
+/* ===== Hero ===== */
+.hero{background:linear-gradient(135deg,var(--dk) 0%,#2a1a6e 40%,var(--v) 68%,#00b86b 100%);border-radius:0 0 28px 28px;padding:20px 0 36px;margin:0 -22px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,227,132,.18),transparent 65%);top:-230px;right:-80px}
+.hero::after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 65%);bottom:-150px;left:-60px}
+.hero-in{max-width:1040px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+/* Twind logo */
+.tw-logo{display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;backdrop-filter:blur(4px)}
+.tw-wordmark{font-family:'Poppins',sans-serif;font-weight:800;font-size:16px;color:#fff;letter-spacing:-.2px;line-height:1}
+
+.kicker{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--m);font-weight:700;margin-bottom:8px}
+.hero h1{font-size:32px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-.5px}
+.hero .sub{color:rgba(255,255,255,.68);font-size:14px;max-width:620px;line-height:1.55}
+.hero-meta{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.htag{font-size:10.5px;font-weight:600;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.11);color:#fff;border:1px solid rgba(255,255,255,.18);text-transform:uppercase;letter-spacing:.3px}
+.hero-stats{display:flex;gap:28px;margin-top:20px;flex-wrap:wrap}
+.hstat{color:#fff}
+.hstat b{font-size:22px;font-weight:800;display:block;line-height:1.15}
+.hstat span{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.5px;text-transform:uppercase;font-weight:600}
+
+/* ===== Progress bar ===== */
+.progress{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:-26px 0 0;position:relative;z-index:2;box-shadow:var(--sh-lg)}
+.bar{flex:1;min-width:200px;height:8px;background:var(--vbg);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--v),var(--m));border-radius:6px}
+.ptext{font-size:13px;color:var(--body);font-weight:700;white-space:nowrap}
+.ptag{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--vbg);color:var(--v);text-transform:uppercase;letter-spacing:.3px}
+
+/* ===== Tabs ===== */
+.tabbar{position:sticky;top:0;z-index:10;background:rgba(245,245,245,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);margin:0 -22px;padding:13px 22px 11px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;max-width:1040px;margin:0 auto}
+.tab{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s;font-family:'Poppins',sans-serif}
+.tab .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.35}
+.tab:hover{border-color:var(--v);color:var(--v)}
+.tab.active{background:var(--dk);border-color:var(--dk);color:#fff;box-shadow:var(--sh)}
+.tab.active .dot{background:var(--m);opacity:1}
+.panel{display:none;animation:fade .28s;padding-top:24px}
+.panel.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* ===== Glance table ===== */
+.glance{width:100%;border-collapse:separate;border-spacing:0;margin-bottom:20px;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--sh)}
+.glance th{background:var(--dk);color:#fff;text-align:left;padding:10px 16px;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase}
+.glance td{padding:11px 16px;border-top:1px solid var(--line);font-size:13.5px;vertical-align:top;color:var(--body)}
+.glance td:first-child{font-weight:700;color:var(--dk);width:150px;white-space:nowrap}
+.glance a{color:var(--v);text-decoration:none}
+.glance a:hover{text-decoration:underline}
+
+/* ===== Feature cards ===== */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin:12px 0 20px}
+.crd{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--sh);transition:.18s}
+.crd:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+.crd-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px}
+.crd-tag{font-size:10px;font-weight:700;letter-spacing:.5px;padding:2px 9px;border-radius:999px;text-transform:uppercase;margin-bottom:8px;display:inline-block}
+.crd h3{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--dk)}
+.crd p{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* ===== Validation scenarios ===== */
+.sc-list{display:flex;flex-direction:column;gap:10px;margin:12px 0 20px}
+.sc{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh)}
+.sc-n{min-width:28px;height:28px;border-radius:8px;background:var(--vbg);color:var(--v);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sc-text h4{font-size:13.5px;font-weight:700;color:var(--dk);margin-bottom:3px}
+.sc-text p{font-size:13px;color:var(--muted)}
+
+/* ===== Phase progress (clickable) ===== */
+.ph-prog{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--sh);margin:12px 0 4px}
+.ph-row{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s}
+.ph-row:last-child{border-bottom:none}
+.ph-row:hover{background:#f0edf9}
+.ph-row:hover .ph-name{color:var(--v)}
+.ph-row:hover .ph-arrow{color:var(--v)}
+.ph-ico{font-size:19px;width:26px;flex-shrink:0}
+.ph-info{flex:1}
+.ph-name{font-size:13.5px;font-weight:700;color:var(--dk);transition:color .15s}
+.ph-label{font-size:11.5px;color:var(--muted)}
+.ph-minibar{width:100px;height:5px;background:var(--vbg);border-radius:4px;overflow:hidden}
+.ph-minibar i{display:block;height:100%;background:linear-gradient(90deg,var(--v),var(--m));border-radius:4px}
+.ph-pct{font-size:12px;font-weight:700;color:var(--muted);width:34px;text-align:right}
+.ph-arrow{font-size:11px;color:var(--muted);transition:color .15s;flex-shrink:0}
+
+/* ===== Section heading ===== */
+.sec-h{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--v);margin:22px 0 10px;font-weight:700}
+
+/* ===== Phase header ===== */
+.phase-hd{display:flex;align-items:center;gap:14px;margin:4px 0 18px}
+.ph-badge{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:var(--sh)}
+.phase-hd h2{font-size:20px;letter-spacing:-.3px;font-weight:800}
+.phase-hd p{color:var(--muted);font-size:13px;font-style:italic;margin-top:2px}
+
+/* ===== Step cards ===== */
+.step{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:10px 0;overflow:hidden;box-shadow:var(--sh);transition:border-color .18s,box-shadow .18s}
+.step.done{border-color:#79dab4}
+.step.done:hover{box-shadow:var(--sh-lg)}
+.step.wip{border-color:#FCD34D}
+.step.wip:hover{box-shadow:0 2px 6px rgba(217,119,6,.1),0 8px 24px -6px rgba(217,119,6,.18)}
+.step.draft{border-color:#CBD5E1}
+.step.draft:hover{box-shadow:0 2px 6px rgba(100,116,139,.1),0 8px 24px -6px rgba(100,116,139,.15)}
+.step.pending{opacity:.5}
+.step-hd{display:flex;align-items:flex-start;gap:12px;padding:13px 18px 11px;user-select:none}
+.step.done .step-hd,.step.wip .step-hd,.step.draft .step-hd{cursor:pointer}
+.step.pending .step-hd{cursor:default}
+.snum{min-width:36px;height:36px;border-radius:10px;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:-.5px;margin-top:2px}
+.step.done .snum{background:var(--mbg);color:var(--md);border:1.5px solid #79dab4}
+.step.wip .snum{background:#FEF3C7;color:#92400E;border:1.5px solid #FCD34D}
+.step.draft .snum{background:#F1F5F9;color:#64748B;border:1.5px solid #CBD5E1}
+.step.pending .snum{background:var(--bg);color:var(--muted);border:1.5px solid var(--line)}
+.stitle{flex:1;min-width:0}
+.stitle-top{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.stitle-top h3{font-size:14px;font-weight:700;letter-spacing:-.1px;color:var(--dk);flex:1;min-width:0}
+.stitle .meta{font-size:11.5px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sdesc{font-size:11.5px;color:var(--muted);line-height:1.45;margin:3px 0 5px}
+.cf-link-hd{font-size:11px;color:var(--muted);font-weight:500;text-decoration:none;white-space:nowrap;opacity:.6;transition:.15s;display:inline-block}
+.cf-link-hd:hover{color:var(--v);opacity:1}
+.cf-link{display:block;text-align:right;font-size:12px;color:var(--v);font-weight:600;text-decoration:none;margin-top:16px;opacity:.8}
+.cf-link:hover{opacity:1;text-decoration:underline}
+.sbadge{font-size:10px;font-weight:700;letter-spacing:.4px;padding:3px 10px;border-radius:999px;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
+.sbadge.done{background:var(--mbg);color:var(--md);border:1px solid #79dab4}
+.sbadge.wip{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
+.sbadge.draft{background:#F1F5F9;color:#64748B;border:1px solid #CBD5E1}
+.sbadge.pend{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.chev{color:var(--muted);transition:transform .22s;font-size:10px;margin-left:2px;flex-shrink:0}
+.step.open .chev{transform:rotate(180deg)}
+.step-body{display:none;padding:6px 20px 22px 68px;border-top:1px solid var(--line)}
+.step.open .step-body{display:block;animation:fade .22s}
+
+/* ===== JTBD grid ===== */
+.jtbd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:13px;margin:12px 0 18px}
+.jtbd{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--sh)}
+.jtbd.ev{border-left:3px solid var(--m)}
+.jtbd.as{border-left:3px solid var(--amber)}
+.jtbd-rank{font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.jtbd h4{font-size:13.5px;font-weight:700;color:var(--dk);margin-bottom:8px;line-height:1.4}
+.jtbd-dims{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.dim{font-size:12px;color:var(--body);padding:5px 10px;background:var(--bg);border-radius:7px;line-height:1.45}
+.dim b{color:var(--dk)}
+.ev-pill{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:10px}
+.ev-pill.ev{background:var(--mbg);color:var(--dk)}
+.ev-pill.as{background:var(--amber-bg);color:var(--amber)}
+.quote{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;padding:7px 11px;border-left:2px solid var(--m);background:var(--mbg);border-radius:0 8px 8px 0;line-height:1.5}
+.quote.as-q{border-left-color:var(--amber);background:var(--amber-bg)}
+
+/* ===== Ranking table ===== */
+.minit{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:12.5px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.minit th{text-align:left;background:var(--vbg);color:var(--dk);padding:8px 12px;font-size:10.5px;letter-spacing:.5px;text-transform:uppercase}
+.minit td{padding:9px 12px;border-top:1px solid var(--line);color:var(--body);vertical-align:top}
+.minit tr td:first-child{font-weight:700;color:var(--dk);width:30px}
+
+/* ===== Open questions ===== */
+.oq{background:linear-gradient(120deg,var(--dk),#223942);border-radius:14px;padding:16px 18px;margin-top:14px}
+.oq-title{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--m);margin-bottom:10px;font-weight:700}
+.oq p{font-size:13px;color:rgba(255,255,255,.8);margin:5px 0;padding-left:14px;position:relative;line-height:1.5}
+.oq p::before{content:"→";position:absolute;left:0;color:var(--m)}
+
+@media(max-width:640px){
+  .hero h1{font-size:24px}
+  .step-body{padding:0 16px 18px}
+  .jtbd-grid{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== HERO ============================== -->
+<div class="hero">
+  <div class="hero-in">
+
+    <div class="kicker">NPI Process · Business Delivery Tracker</div>
+    <h1>MIGA-7 — Mandatory Risks</h1>
+    <p class="sub">Feature delivery tracker — 15-step NPI process across 5 phases.</p>
+    <div class="hero-meta">
+      <span class="htag">📋 MIGA-7</span>
+      <span class="htag">🔍 Phase 1 — Discovery</span>
+      <span class="htag">📅 June 2026</span>
+      <span class="htag">👤 Marta Villena</span>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><b>4</b><span>Steps started</span></div>
+      <div class="hstat"><b>15</b><span>Total steps</span></div>
+      <div class="hstat"><b>5</b><span>NPI phases</span></div>
+      <div class="hstat"><b>Phase 1</b><span>Current phase</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- Progress -->
+<div class="progress">
+  <div class="bar"><i></i></div>
+  <span class="ptext">4 / 15 steps</span>
+  <span class="ptag">🔍 Discovery</span>
+</div>
+
+<!-- Tabs -->
+<div class="tabbar">
+  <div class="tabs">
+    <button class="tab active" data-panel="p0"><span class="dot"></span>Overview</button>
+    <button class="tab" data-panel="p1"><span class="dot"></span>1 · Discovery</button>
+    <button class="tab" data-panel="p2"><span class="dot"></span>2 · Validation</button>
+    <button class="tab" data-panel="p3"><span class="dot"></span>3 · NPI</button>
+    <button class="tab" data-panel="p4"><span class="dot"></span>4 · Adoption</button>
+    <button class="tab" data-panel="p5"><span class="dot"></span>5 · Roadmap</button>
+  </div>
+</div>
+
+
+<!-- ============================== PANEL 0: OVERVIEW ============================== -->
+<div class="panel show" id="p0">
+
+  <table class="glance">
+    <tr><th>Field</th><th>Detail</th></tr>
+    <tr><td>Feature</td><td><strong>Mandatory Risks</strong> — configuration of mandatory risk requirements in employee-to-contract assignment</td></tr>
+    <tr><td>Jira Epic</td><td><a href="https://ctaima.atlassian.net/browse/MIGA-7" target="_blank">MIGA-7 ↗</a></td></tr>
+    <tr><td>Confluence</td><td><a href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/859865091" target="_blank">MIGA-7 — SDD Folder ↗</a></td></tr>
+    <tr><td>PM</td><td>Marta Villena</td></tr>
+    <tr><td>Current phase</td><td>Phase 1 — Discovery (Step 1 of 5 complete)</td></tr>
+    <tr><td>NPI progress</td><td>4 of 15 steps started · 27%</td></tr>
+    <tr><td>Last update</td><td>June 2026</td></tr>
+  </table>
+
+  <p class="sec-h">What this feature does</p>
+  <div class="cards">
+    <div class="crd">
+      <div class="crd-icon" style="background:var(--vbg)">⚙️</div>
+      <span class="crd-tag" style="background:var(--vbg);color:var(--v)">All clients</span>
+      <h3>Base config — Global mandatory risk field</h3>
+      <p>The buyer can mark risk declaration as mandatory at the account level. No employee can be assigned to a contract without declaring at least one risk.</p>
+    </div>
+    <div class="crd">
+      <div class="crd-icon" style="background:var(--mbg)">🎯</div>
+      <span class="crd-tag" style="background:var(--mbg);color:var(--md)">Add-on</span>
+      <h3>Activity-specific minimum risks</h3>
+      <p>The buyer defines, per activity, which specific risks are minimum-mandatory. The platform validates collective coverage: the contractor's employees assigned to that activity must cover them between them all.</p>
+    </div>
+  </div>
+
+  <p class="sec-h">Validation scenarios</p>
+  <div class="sc-list">
+    <div class="sc">
+      <div class="sc-n">1</div>
+      <div class="sc-text">
+        <h4>Employee assignment</h4>
+        <p>When a contractor assigns an employee to a contract, the platform validates that the required risks for the activity are collectively covered by that contractor's assigned workforce.</p>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sc-n">2</div>
+      <div class="sc-text">
+        <h4>Removal blocked</h4>
+        <p>Removing an employee from an active contract is blocked if that employee is the sole holder of a minimum-mandatory risk for the activity — coverage must not break.</p>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sc-n">3</div>
+      <div class="sc-text">
+        <h4>Reactivation after expiry <em style="font-size:11px;font-weight:600;color:var(--amber);font-style:normal">edge case</em></h4>
+        <p>If a contract expired and the sole risk-holder was removed during that period: on reactivation the system detects the gap, notifies the contractor, and blocks all their employees' access until coverage is restored.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-h">NPI progress by phase — click to navigate</p>
+  <div class="ph-prog">
+    <div class="ph-row" data-tab="p1">
+      <span class="ph-ico">🔍</span>
+      <div class="ph-info"><div class="ph-name">1 · Discovery</div><div class="ph-label">Steps 1–5</div></div>
+      <div class="ph-minibar"><i style="width:60%"></i></div>
+      <div class="ph-pct">60%</div>
+      <span class="ph-arrow">›</span>
+    </div>
+    <div class="ph-row" data-tab="p2">
+      <span class="ph-ico">🧪</span>
+      <div class="ph-info"><div class="ph-name">2 · Validation</div><div class="ph-label">Steps 6–10</div></div>
+      <div class="ph-minibar"><i style="width:0%"></i></div>
+      <div class="ph-pct">0%</div>
+      <span class="ph-arrow">›</span>
+    </div>
+    <div class="ph-row" data-tab="p3">
+      <span class="ph-ico">🚀</span>
+      <div class="ph-info"><div class="ph-name">3 · New Product Introduction</div><div class="ph-label">Steps 11–12</div></div>
+      <div class="ph-minibar"><i style="width:0%"></i></div>
+      <div class="ph-pct">0%</div>
+      <span class="ph-arrow">›</span>
+    </div>
+    <div class="ph-row" data-tab="p4">
+      <span class="ph-ico">📈</span>
+      <div class="ph-info"><div class="ph-name">4 · Driving Adoption</div><div class="ph-label">Steps 13–14</div></div>
+      <div class="ph-minibar"><i style="width:0%"></i></div>
+      <div class="ph-pct">0%</div>
+      <span class="ph-arrow">›</span>
+    </div>
+    <div class="ph-row" data-tab="p5">
+      <span class="ph-ico">🎯</span>
+      <div class="ph-info"><div class="ph-name">5 · Roadmap &amp; Outcomes</div><div class="ph-label">Step 15</div></div>
+      <div class="ph-minibar"><i style="width:0%"></i></div>
+      <div class="ph-pct">0%</div>
+      <span class="ph-arrow">›</span>
+    </div>
+  </div>
+
+</div><!-- /p0 -->
+
+
+<!-- ============================== PANEL 1: DISCOVERY ============================== -->
+<div class="panel" id="p1">
+  <div class="phase-hd">
+    <div class="ph-badge" style="background:var(--vbg)">🔍</div>
+    <div>
+      <h2>Phase 1 — Discovery</h2>
+      <p>Understand users, workflows and pain before building anything.</p>
+    </div>
+  </div>
+
+  <!-- ── STEP 1 · DONE ── -->
+  <div class="step done">
+    <div class="step-hd" onclick="this.parentElement.classList.toggle('open')">
+      <div class="snum">1</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>01 JTBD Review — Mandatory Risks</h3>
+          <span class="sbadge done">Done</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="meta">3 Jobs identified · 2 with direct evidence · 1 assumption pending validation</div>
+        <p class="sdesc">Identify and rank the Jobs to Be Done — what users are really trying to accomplish — with functional, emotional and social dimensions, backed by direct evidence or flagged as assumptions. <a class="cf-link-hd" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/859635736" target="_blank" onclick="event.stopPropagation()">Confluence ↗</a></p>
+      </div>
+    </div>
+    <div class="step-body">
+
+      <p class="sec-h">Jobs to Be Done identified</p>
+      <div class="jtbd-grid">
+
+        <!-- JOB 1 -->
+        <div class="jtbd ev">
+          <div class="jtbd-rank">Ranking #1 · Top priority</div>
+          <h4>Job 1 — Buyer: enforce a baseline risk requirement across all assignments</h4>
+          <p style="font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:8px"><em>When</em> I need to ensure every contractor employee has declared risks, <em>I want to</em> configure risk declaration as mandatory at the account level, <em>so I can</em> eliminate the current gap where assignments are saved with no risks at all.</p>
+          <div class="jtbd-dims">
+            <div class="dim"><b>Functional:</b> global rule — assignment cannot be saved with an empty risk field</div>
+            <div class="dim"><b>Emotional:</b> relief and confidence — no more anxiety over uncontrolled gaps in safety records</div>
+            <div class="dim"><b>Social:</b> be seen as a rigorous, audit-ready safety manager who doesn't leave compliance to chance</div>
+          </div>
+          <span class="ev-pill ev">🟢 Direct evidence</span>
+          <div class="quote">«hoy por hoy se puede guardar el contrato sin indicar los riesgos, porque no son obligatorios.» — Aleksandra, Service team · Confirmed in Lankabe session</div>
+        </div>
+
+        <!-- JOB 2 -->
+        <div class="jtbd ev">
+          <div class="jtbd-rank">Ranking #2 · High priority</div>
+          <h4>Job 2 — Buyer: enforce activity-specific risk coverage across the contractor's workforce</h4>
+          <p style="font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:8px"><em>When</em> a contractor is working on a specific activity (e.g. electrical work, elevated platforms), <em>I want to</em> define which risks are minimum-mandatory for that activity and have the platform validate collective coverage, <em>so I can</em> guarantee activity-specific risks are documented — not just the generic default.</p>
+          <div class="jtbd-dims">
+            <div class="dim"><b>Functional:</b> per-activity risk rules + collective validation (≥1 employee covers each required risk)</div>
+            <div class="dim"><b>Emotional:</b> control — knowing the most dangerous activities have their specific risks covered</div>
+            <div class="dim"><b>Social:</b> demonstrate to auditors that risk management is granular and activity-specific, not one-size-fits-all</div>
+          </div>
+          <span class="ev-pill ev">🟢 Direct evidence</span>
+          <div class="quote">«es súper recurrente que el contratista va al obligatorio y lo que no es obligatorio, no lo marca.» — Laura Méndez, CTAIMA PM · Lankabe session</div>
+        </div>
+
+        <!-- JOB 3 -->
+        <div class="jtbd as">
+          <div class="jtbd-rank">Ranking #3 · Needs validation</div>
+          <h4>Job 3 — Contractor: navigate risk requirements without being blocked unexpectedly</h4>
+          <p style="font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:8px"><em>When</em> assigning employees to a contract with mandatory risk rules, <em>I want to</em> understand clearly which risks are required and see real-time coverage feedback, <em>so I can</em> complete the assignment without surprise blocks and plan ahead which employees can cover the required risks.</p>
+          <div class="jtbd-dims">
+            <div class="dim"><b>Functional:</b> visibility of required risks per activity before assigning + real-time coverage progress as employees are added</div>
+            <div class="dim"><b>Emotional:</b> avoid frustration of being blocked mid-process without understanding why — predictability reduces anxiety</div>
+            <div class="dim"><b>Social:</b> appear competent and organized to the buyer; avoid failing compliance checks repeatedly</div>
+          </div>
+          <span class="ev-pill as">🟡 Assumption — needs validation</span>
+          <div class="quote as-q">Implied by the configuration affecting contractors directly. Supported indirectly by Virginia (Erki): «no sé decirle qué documentación le va a pedir». No direct contractor quote — needs contractor-side interviews.</div>
+        </div>
+
+      </div>
+
+      <p class="sec-h">Job priority ranking</p>
+      <table class="minit">
+        <tr><th>#</th><th>Job</th><th>Rationale</th></tr>
+        <tr><td>1</td><td><strong>Job 1</strong> — Buyer: baseline mandatory field</td><td>Highest evidence, affects 100% of employee assignments. Base feature for all clients. Simplest to implement and validates the core premise.</td></tr>
+        <tr><td>2</td><td><strong>Job 2</strong> — Buyer: activity-specific risks (add-on)</td><td>Addresses the deeper recurring pain — contractors skipping activity-specific risks. Higher complexity, add-on model, but directly targets the most dangerous compliance gap.</td></tr>
+        <tr><td>3</td><td><strong>Job 3</strong> — Contractor: visibility &amp; predictability</td><td>Critical for adoption — without this, Jobs 1 and 2 create friction without building trust. Low direct evidence; needs contractor-side interviews to confirm.</td></tr>
+      </table>
+
+      <div class="oq">
+        <div class="oq-title">Open questions</div>
+        <p>Which Job anchors the Product Brief: Job 1, Job 2, or both in combination?</p>
+        <p>Is contractor-side friction (Job 3) already validated in existing research or CS escalations — or is it a gap to close before Phase 2?</p>
+        <p style="margin-top:8px;color:rgba(255,255,255,.45);font-size:12px">⚠️ Audio pending — update this JTBD when new evidence is available.</p>
+      </div>
+      <a class="cf-link" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/859635736" target="_blank">View in Confluence ↗</a>
+    </div>
+  </div>
+
+  <!-- ── STEP 2 · IN PROGRESS ── -->
+  <div class="step wip">
+    <div class="step-hd" onclick="this.parentElement.classList.toggle('open')">
+      <div class="snum">2</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>02 Workflow Map</h3>
+          <span class="sbadge wip">In Progress</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="meta">User: Buyer (Safety/Compliance Manager) · AS-IS workflow today, without the feature</div>
+        <p class="sdesc">Document the primary user's current workflow step by step: what they do, think and feel at each stage, where friction peaks, invisible workarounds outside the product, and where the biggest opportunities sit. <a class="cf-link-hd" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/861011969" target="_blank" onclick="event.stopPropagation()">Confluence ↗</a></p>
+      </div>
+    </div>
+    <div class="step-body">
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px">This is the primary workflow because the pain lives here: the buyer has no self-service mechanism to enforce mandatory risks, is dependent on Service for any configuration, and has no enforcement lever once contractors are assigned.</p>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">AS-IS Workflow</h4>
+      <div style="overflow-x:auto;margin-bottom:20px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--vbg)">
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Phase</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Doing</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Thinking &amp; Feeling</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Touchpoints</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Opportunities</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:8px 12px;font-weight:700">1. Spot the gap</td>
+              <td style="padding:8px 12px">Reviews employee assignments in Twind; notices risk fields are empty or incomplete across multiple contractors</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"I have no idea if anyone has actually declared risks. I can't trust this data." <span style="color:var(--amber);font-weight:600">Anxiety.</span></td>
+              <td style="padding:8px 12px">Twind (read-only view of assignments)</td>
+              <td style="padding:8px 12px">Surface a compliance status indicator at contract and contractor level — how many employees have 0 risks declared</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa">
+              <td style="padding:8px 12px;font-weight:700">2. Request config from Service</td>
+              <td style="padding:8px 12px">Opens a ticket or sends an email to the Service team requesting that risk declaration be set as mandatory</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"Why can't I do this myself? In CTAIMACAE I had this control directly." <span style="color:#DC2626;font-weight:600">Frustration + sense of regression.</span></td>
+              <td style="padding:8px 12px">Email / internal ticketing system</td>
+              <td style="padding:8px 12px">Self-service configuration panel in Twind — buyer sets rules without involving Service</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:8px 12px;font-weight:700">3. Wait and follow up</td>
+              <td style="padding:8px 12px">Waits for Service to action the request; may send follow-up messages if it takes too long</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"This is taking too long. I'm dependent on someone else to enforce my own compliance rules." <span style="color:#DC2626;font-weight:600">Blocked.</span></td>
+              <td style="padding:8px 12px">Email thread with Service team</td>
+              <td style="padding:8px 12px">Eliminate this phase entirely via self-service; reduce time-to-enforce to minutes</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa">
+              <td style="padding:8px 12px;font-weight:700">4. Chase contractors directly</td>
+              <td style="padding:8px 12px">Calls or sends WhatsApp/email to contractor contacts reminding them to fill in risks for their assigned employees</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"Will they actually do it? I'm not sure they understand what's needed." <span style="color:var(--amber);font-weight:600">Distrust + manual overhead.</span></td>
+              <td style="padding:8px 12px">Phone, WhatsApp, email — entirely outside Twind</td>
+              <td style="padding:8px 12px">In-platform enforcement: contractor is blocked until risks are filled; automated notification replaces manual chasing</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:8px 12px;font-weight:700">5. No verification possible</td>
+              <td style="padding:8px 12px">Returns to Twind to check; sees no enforcement mechanism — employees without risks are still assigned and active</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"I've done everything I can but there's no guarantee. I don't know if we're actually compliant." <span style="color:#DC2626;font-weight:600">Deep distrust.</span></td>
+              <td style="padding:8px 12px">Twind platform</td>
+              <td style="padding:8px 12px">Blocking at assignment time + access control integration: only compliant employees can be marked as active</td>
+            </tr>
+            <tr style="background:#fafafa">
+              <td style="padding:8px 12px;font-weight:700">6. Compliance risk materialises</td>
+              <td style="padding:8px 12px">Employees without documented risks may access the facility unchecked; buyer has no audit trail to prove compliance</td>
+              <td style="padding:8px 12px;font-style:italic;color:var(--body)">"If there's an incident, I have no proof we verified risks. This is a liability." <span style="color:#DC2626;font-weight:600">Fear.</span></td>
+              <td style="padding:8px 12px">Physical access control / facility entry</td>
+              <td style="padding:8px 12px">Real-time access control blocking tied to risk validation status; audit-ready export of compliance state</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Emotional Peaks &amp; Valleys</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        <div style="padding:10px 14px;background:#FEF2F2;border-left:3px solid #DC2626;border-radius:8px;font-size:13px"><span style="font-weight:700">🔴 Lowest point — Phase 5:</span> the buyer has gone through the effort of requesting config from Service AND chasing the contractor, yet has zero enforcement. All that effort with no guarantee. <strong>This is where the most value can be created.</strong></div>
+        <div style="padding:10px 14px;background:#FEF2F2;border-left:3px solid #DC2626;border-radius:8px;font-size:13px"><span style="font-weight:700">🔴 Second lowest — Phase 2:</span> having to ask Service for something that should be self-configurable. Amplified for buyers who migrated from CTAIMACAE and remember having direct control. Feels like a step backwards.</div>
+        <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:8px;font-size:13px"><span style="font-weight:700">🟡 Phase 4:</span> manual contractor chasing via WhatsApp/email is invisible to Twind and creates a parallel coordination layer the product can never see or optimise.</div>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Invisible Steps (outside the product)</h4>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px">
+        <p style="margin:0 0 6px;color:var(--muted)">These steps happen entirely outside Twind and represent the real competition — not other SaaS tools, but the workarounds buyers have built:</p>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+          <li>Phone calls and WhatsApp messages to contractor contacts</li>
+          <li>Internal tickets or email requests to the Service team</li>
+          <li>Manual Excel tracking of which contractors/employees have declared risks</li>
+          <li>Verbal agreements with contractors that are never recorded in the platform</li>
+        </ul>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--amber)">⚠️ Critical Design Question — Rule Activation with Existing Assignments</h4>
+      <div style="overflow-x:auto;margin-bottom:16px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--amber-bg)">
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--amber);border-bottom:2px solid #FDE68A">Option</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--amber);border-bottom:2px solid #FDE68A">Behaviour</th>
+              <th style="padding:8px 12px;text-align:left;font-weight:700;color:var(--amber);border-bottom:2px solid #FDE68A">Trade-off</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:8px 12px;font-weight:700">A — Retroactive</td>
+              <td style="padding:8px 12px">All existing non-compliant assignments are immediately flagged; contractors notified; grace period defined; access blocked after deadline</td>
+              <td style="padding:8px 12px">Full compliance enforced immediately — but high disruption risk if many existing assignments are affected</td>
+            </tr>
+            <tr style="background:#fafafa">
+              <td style="padding:8px 12px;font-weight:700">B — Forward-only</td>
+              <td style="padding:8px 12px">Rules apply only to new assignments from activation date; existing assignments untouched</td>
+              <td style="padding:8px 12px">Zero disruption — but the existing compliance gap persists indefinitely for already-assigned employees</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px;color:var(--amber);font-weight:600;margin:0 0 16px">⚠️ This decision must be made before designing the configuration UX. It affects the activation flow, notifications, access control integration, and the onboarding experience for buyers enabling the feature for the first time.</p>
+
+      <div class="oq">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;opacity:.6">Open Questions</div>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13px">
+          <li>Are there steps in this workflow that happen inside other systems not mentioned here (e.g. a specific ticketing tool, an ERP, a physical sign-in system)?</li>
+          <li>For the rule activation edge case: does the team have a preference for Option A or B, or is this still open?</li>
+        </ul>
+      </div>
+
+      <a class="cf-link" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/861011969" target="_blank">View in Confluence ↗</a>
+    </div>
+  </div>
+
+  <!-- ── STEP 3 · IN PROGRESS ── -->
+  <div class="step wip">
+    <div class="step-hd" onclick="this.parentElement.classList.toggle('open')">
+      <div class="snum">3</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>03 Transcript Analysis</h3>
+          <span class="sbadge wip">In Progress</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="meta">Sources: Aleksandra · Lankabe · Erki · Intercom Insights · Internal design context</div>
+        <p class="sdesc">Synthesize all qualitative research sources into a structured pain taxonomy, classify each finding as Challenge or Coping Strategy, and extract key patterns, notable variations and devil's advocate questions. <a class="cf-link-hd" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/860880917" target="_blank" onclick="event.stopPropagation()">Confluence ↗</a></p>
+      </div>
+    </div>
+    <div class="step-body">
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Pain Taxonomy</h4>
+      <div style="overflow-x:auto;margin-bottom:20px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--vbg)">
+              <th style="padding:7px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">#</th>
+              <th style="padding:7px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Category</th>
+              <th style="padding:7px 12px;text-align:left;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 12px;font-weight:700">1</td><td style="padding:7px 12px;font-weight:600">Enforcement</td><td style="padding:7px 12px">No technical mechanism exists to mandate risk declaration — everything is voluntary today</td></tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa"><td style="padding:7px 12px;font-weight:700">2</td><td style="padding:7px 12px;font-weight:600">Self-service Configuration</td><td style="padding:7px 12px">The buyer cannot configure mandatory risk rules — options today provide no platform validation and no guarantee of compliance</td></tr>
+            <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 12px;font-weight:700">3</td><td style="padding:7px 12px;font-weight:600">Contractor Visibility</td><td style="padding:7px 12px">The contractor does not know which risks will be required for a given role or activity</td></tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa"><td style="padding:7px 12px;font-weight:700">4</td><td style="padding:7px 12px;font-weight:600">Buyer Trust &amp; Oversight</td><td style="padding:7px 12px">The buyer cannot verify or trust that the contractor has correctly declared risks</td></tr>
+            <tr style="border-bottom:1px solid var(--line)"><td style="padding:7px 12px;font-weight:700">5</td><td style="padding:7px 12px;font-weight:600">Activity-level Coverage</td><td style="padding:7px 12px">Collective coverage logic for mandatory risks per activity across the contractor's employees</td></tr>
+            <tr style="background:#fafafa"><td style="padding:7px 12px;font-weight:700">6</td><td style="padding:7px 12px;font-weight:600">State &amp; Edge Cases</td><td style="padding:7px 12px">System behaviour under state changes: activating rules with existing assignments, contract reactivation after expiry</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Full Analysis</h4>
+      <div style="overflow-x:auto;margin-bottom:20px">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr style="background:var(--vbg)">
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line);white-space:nowrap">#</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line);white-space:nowrap">Source</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line);white-space:nowrap">Type</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Challenge / Strategy</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Description</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line);white-space:nowrap">Category</th>
+              <th style="padding:6px 10px;font-weight:700;color:var(--v);border-bottom:2px solid var(--line)">Direct Quote</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:6px 10px;font-weight:700">1</td>
+              <td style="padding:6px 10px;white-space:nowrap">Aleksandra transcript<br><span style="color:var(--muted)">Service team</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">Risk field is optional — assignment saves with zero risks</td>
+              <td style="padding:6px 10px">No technical validation prevents saving an assignment without any risk declared. The field exists but is completely optional.</td>
+              <td style="padding:6px 10px"><span style="background:var(--vbg);color:var(--v);padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Enforcement</span></td>
+              <td style="padding:6px 10px;font-style:italic;color:var(--muted)">"hoy por hoy se puede guardar el contrato sin indicar los riesgos, porque… no son obligatorios."</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa">
+              <td style="padding:6px 10px;font-weight:700">2</td>
+              <td style="padding:6px 10px;white-space:nowrap">Lankabe session<br><span style="color:var(--muted)">CTAIMA PM</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">Contractors do the minimum — mark only mandatory risks, skip the rest</td>
+              <td style="padding:6px 10px">Where some risks are configured as mandatory via Service, contractors mark only those and skip everything else. Where nothing is mandatory, they mark nothing.</td>
+              <td style="padding:6px 10px"><span style="background:var(--vbg);color:var(--v);padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Enforcement</span></td>
+              <td style="padding:6px 10px;font-style:italic;color:var(--muted)">"es súper recurrente que el contratista… va al obligatorio y lo que no es obligatorio, no lo marca."</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:6px 10px;font-weight:700">3</td>
+              <td style="padding:6px 10px;white-space:nowrap">Internal context<br><span style="color:var(--muted)">Buyer</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">No self-service to configure mandatory risk rules</td>
+              <td style="padding:6px 10px">Buyer can only ask contractor to fill voluntarily or ask Service — neither enforces compliance. Amplified for CTAIMACAE migrants who had direct control.</td>
+              <td style="padding:6px 10px"><span style="background:#FEF3C7;color:#92400E;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Self-service Config</span></td>
+              <td style="padding:6px 10px;color:var(--muted)">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa">
+              <td style="padding:6px 10px;font-weight:700">4</td>
+              <td style="padding:6px 10px;white-space:nowrap">Workflow context<br><span style="color:var(--muted)">Buyer</span></td>
+              <td style="padding:6px 10px"><span style="background:#EFF6FF;color:#1D4ED8;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Strategy</span></td>
+              <td style="padding:6px 10px">Buyer chases contractor via phone / WhatsApp / email</td>
+              <td style="padding:6px 10px">With no platform enforcement, buyers use direct contact outside Twind. Invisible to the product and unscalable as contractor count grows.</td>
+              <td style="padding:6px 10px"><span style="background:#F0FDF4;color:#166534;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Buyer Trust</span></td>
+              <td style="padding:6px 10px;color:var(--muted)">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:6px 10px;font-weight:700">5</td>
+              <td style="padding:6px 10px;white-space:nowrap">Erki session<br><span style="color:var(--muted)">Safety Mgr</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">Buyer can't tell contractors what docs the platform will require for a role/activity</td>
+              <td style="padding:6px 10px">Parametrisation exists as an Excel delivered at setup — not surfaced in the UI. Leads to back-and-forth when briefing contractors.</td>
+              <td style="padding:6px 10px"><span style="background:#F5F3FF;color:#6D28D9;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Contractor Vis.</span></td>
+              <td style="padding:6px 10px;font-style:italic;color:var(--muted)">"le pones el rol de albañil, pero no sé decirle qué documentación le va a pedir."</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);background:#fafafa">
+              <td style="padding:6px 10px;font-weight:700">6</td>
+              <td style="padding:6px 10px;white-space:nowrap">Feature design<br><span style="color:var(--muted)">Buyer+Contractor</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">No collective coverage model for activity-level mandatory risks</td>
+              <td style="padding:6px 10px">Capability B requires validating that across all employees of a contractor per activity, each mandatory risk is covered by at least one employee. No such logic exists today.</td>
+              <td style="padding:6px 10px"><span style="background:#FFF7ED;color:#9A3412;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">Activity Coverage</span></td>
+              <td style="padding:6px 10px;color:var(--muted)">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line)">
+              <td style="padding:6px 10px;font-weight:700">7</td>
+              <td style="padding:6px 10px;white-space:nowrap">Feature design<br><span style="color:var(--muted)">System</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">No detection when mandatory risk coverage breaks on contract reactivation</td>
+              <td style="padding:6px 10px">If the sole holder of a mandatory risk is removed while a contract is expired and the contract is later reactivated, coverage breaks silently — no flag, no notification.</td>
+              <td style="padding:6px 10px"><span style="background:#F1F5F9;color:#475569;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">State &amp; Edge Cases</span></td>
+              <td style="padding:6px 10px;color:var(--muted)">—</td>
+            </tr>
+            <tr style="background:#fafafa">
+              <td style="padding:6px 10px;font-weight:700">8</td>
+              <td style="padding:6px 10px;white-space:nowrap">Feature design<br><span style="color:var(--muted)">System</span></td>
+              <td style="padding:6px 10px"><span style="background:#FEF2F2;color:#DC2626;padding:2px 6px;border-radius:4px;font-weight:600;font-size:11px">Challenge</span></td>
+              <td style="padding:6px 10px">Undefined behaviour when mandatory rules are activated with existing assignments</td>
+              <td style="padding:6px 10px">Retroactive vs. forward-only decision is still open. Blocks the configuration UX design.</td>
+              <td style="padding:6px 10px"><span style="background:#F1F5F9;color:#475569;padding:2px 6px;border-radius:4px;font-size:11px;white-space:nowrap">State &amp; Edge Cases</span></td>
+              <td style="padding:6px 10px;color:var(--muted)">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Key Patterns</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px"><strong>1. The enforcement gap is total and everything else flows from it.</strong> Fix enforcement, and several downstream pains are eliminated automatically.</div>
+        <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px"><strong>2. The buyer has zero technical leverage over contractor behaviour inside the platform.</strong> All enforcement today is manual and happens outside Twind — phone calls, WhatsApp, Service requests. These workarounds are invisible to the product.</div>
+        <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px"><strong>3. Contractors behave rationally — they do exactly what the platform requires, which today is nothing.</strong> This is a missing constraint problem, not a behaviour problem.</div>
+        <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px"><strong>4. The pain is sharper for CTAIMACAE migrants.</strong> They experience Twind's gap as a regression, creating higher urgency and willingness to adopt.</div>
+        <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px"><strong>5. Cap A and Cap B share the same root cause but diverge sharply in complexity.</strong> Cap B requires a new data model, coverage logic, and state management — with 2 open design questions that must be resolved before building.</div>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)">Notable Variation</h4>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px;display:flex;flex-direction:column;gap:6px">
+        <div>• <strong>Regression vs. missing feature:</strong> CTAIMACAE migrants feel this as a step backwards — more urgent and emotional. New buyers see it as a new capability — lower urgency, positive reception.</div>
+        <div>• <strong>Contract complexity varies by buyer:</strong> Simple single-activity vs. complex multi-activity — Cap B lands very differently. Config UX must handle both without overwhelming simpler buyers.</div>
+        <div>• <strong>Contractor visibility pain (row 5) appeared in only 1 of 3 sessions.</strong> May not be universal — needs validation before treating as a primary driver.</div>
+      </div>
+
+      <h4 style="margin:0 0 10px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--amber)">Devil's Advocate</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:8px;font-size:13px"><strong>Is the gap actually causing harm?</strong> We don't know how often assignments are saved with 0 risks in practice. A quick data pull on % of assignments with 0 risks would validate or deflate the urgency.</div>
+        <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:8px;font-size:13px"><strong>CTAIMACAE regression may be a vocal minority.</strong> Buyers who never used CTAIMACAE won't feel this pain the same way — total addressable pain may be smaller than it appears from these sessions.</div>
+        <div style="padding:10px 14px;background:var(--amber-bg);border-left:3px solid var(--amber);border-radius:8px;font-size:13px"><strong>Capability B adoption risk.</strong> If buyers find activity-level coverage complex to configure, adoption of the add-on may be low even after launch. The config UX needs to be simple or the feature goes unused.</div>
+      </div>
+
+      <div class="oq">
+        <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;opacity:.6">Key Question</div>
+        <p style="margin:0;font-size:13px">Before moving to Pain Mapping: <strong>what pain do you know exists that has not appeared in any of these sources?</strong> Particularly: are there CS escalations, support tickets, or sales objections about mandatory risks not represented in these 3 sessions?</p>
+      </div>
+
+      <a class="cf-link" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/860880917" target="_blank">View in Confluence ↗</a>
+    </div>
+  </div>
+
+  <!-- ── STEP 4 · PENDING ── -->
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">4</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>04 Pain Mapping</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Plot each identified pain on a Frequency × Friction 2×2 matrix to find the anchor pain — the one that should ground the Product Brief and focus the solution space.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 5 · PENDING ── -->
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">5</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>05 User Outcome &amp; North Star</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Define the user outcome statement — what changes measurably in the user's life — and the North Star Metric connected to a value driver with a concrete, trackable number.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /p1 -->
+
+
+<!-- ============================== PANEL 2: VALIDATION ============================== -->
+<div class="panel" id="p2">
+  <div class="phase-hd">
+    <div class="ph-badge" style="background:var(--mbg)">🧪</div>
+    <div>
+      <h2>Phase 2 — Validation</h2>
+      <p>Build the business case, test assumptions — earn the right to build.</p>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">6</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>06 Product Brief</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Craft the sharp business case: Problem Statement, Target User, User / Product / Business Outcomes and Competitive Landscape. Earns the right to move into solution space.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">7</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>07 Workflow Re-imagination</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Reimagine the current workflow as AI-first — classify each stage as Automated, Augmented, Eliminated or Unchanged, and identify where AI creates the most leverage for this user.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">8</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>08 Crazy 8s &amp; AI Ideation</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Generate 8 ideas in 8 minutes, then complement with AI ideation to widen the solution space before filtering. Speed and divergence matter more than polish at this stage.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">9</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>09 Opportunity Solution Tree</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Map business outcome → opportunities → sub-opportunities → solution ideas. Ideas enter as hypotheses, not commitments — the tree makes trade-offs and coverage visible at a glance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">10</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>10 Prototype</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Build the minimum artifact needed to test the riskiest assumption before committing engineering. Speed and learning matter more than fidelity — the goal is invalidation, not perfection.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /p2 -->
+
+
+<!-- ============================== PANEL 3: NPI ============================== -->
+<div class="panel" id="p3">
+  <div class="phase-hd">
+    <div class="ph-badge" style="background:#FCE7F3">🚀</div>
+    <div>
+      <h2>Phase 3 — New Product Introduction</h2>
+      <p>Arm Product Marketing, Sales, CS and Support with everything needed for launch.</p>
+    </div>
+  </div>
+
+  <!-- ── STEP 11 · DRAFT ── -->
+  <div class="step draft">
+    <div class="step-hd" onclick="this.parentElement.classList.toggle('open')">
+      <div class="snum">11</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>11 Value Proposition Brief — Mandatory Risks</h3>
+          <span class="sbadge draft">Draft</span>
+          <span class="chev">▼</span>
+        </div>
+        <div class="meta">⚠️ Missing inputs: 06 Product Brief · 04 Pain Mapping · 05 North Star — sections marked as pending</div>
+        <p class="sdesc">Translate discovery into what PMM and Sales actually need: ICP segment, problem framing, workarounds being replaced, JTBD dimensions, value in € and competitive positioning. <a class="cf-link-hd" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/861503489" target="_blank" onclick="event.stopPropagation()">Confluence ↗</a></p>
+      </div>
+    </div>
+    <div class="step-body">
+
+      <p class="sec-h">1. Target segment &amp; personas</p>
+      <table class="minit" style="margin-bottom:16px">
+        <tr><th>Segment</th><th>Profile</th><th>Pain intensity</th></tr>
+        <tr><td><strong>CTAIMACAE migrant</strong></td><td>Had direct configuration control in CTAIMACAE, now on Twind and has lost it</td><td><span style="color:#DC2626;font-weight:700">🔴 High</span> — felt as regression, actively requesting</td></tr>
+        <tr><td><strong>Twind native</strong></td><td>Has only used Twind, workarounds have become normalised</td><td><span style="color:var(--amber);font-weight:700">🟡 Medium</span> — pain accepted as status quo, high receptivity once shown the feature</td></tr>
+      </table>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px"><strong style="color:var(--dk)">Secondary user:</strong> Contractor (Contract Admin) — assigns employees to contracts, experiences the validation constraints set by the buyer. Critical for adoption.</p>
+
+      <p class="sec-h">2. Problem &amp; current workarounds</p>
+      <p style="font-size:13px;color:var(--body);margin-bottom:10px">Buyers have no technical mechanism to enforce risk declaration. The risk field exists but is 100% optional — an assignment saves with zero risks, no validation, no error.</p>
+      <div style="background:var(--bg);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;display:flex;flex-direction:column;gap:5px">
+        <div>• Ask the contractor to fill risks voluntarily — no guarantee, no follow-up mechanism in the platform</div>
+        <div>• Ask Service to fill it manually — still no validation, creates internal dependency</div>
+        <div>• Chase contractors via phone, WhatsApp and email — outside Twind, unscalable</div>
+        <div>• Maintain manual Excel tracking of who has declared risks</div>
+        <div>• Accept the gap — no enforcement = no audit trail if an incident occurs</div>
+      </div>
+
+      <p class="sec-h">3. What success looks like — in their words</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+        <div class="quote">«hoy por hoy se puede guardar el contrato sin indicar los riesgos, porque no son obligatorios.» → <strong>It should not be possible to save without risks when I've said so.</strong></div>
+        <div class="quote">«es súper recurrente que el contratista… va al obligatorio y lo que no es obligatorio, no lo marca.» → <strong>I need the platform to enforce what I define as mandatory.</strong></div>
+        <div class="quote">«no sé decirle qué documentación le va a pedir.» → <strong>I need to brief my contractors accurately, without back-and-forth.</strong></div>
+      </div>
+      <div style="padding:10px 14px;background:var(--vbg);border-left:3px solid var(--v);border-radius:8px;font-size:13px;margin-bottom:16px">Success = <strong>configure once, enforce automatically, trust the result.</strong> No more manual chasing, no more uncertainty.</div>
+
+      <p class="sec-h">4. Jobs to Be Done</p>
+      <table class="minit" style="margin-bottom:16px">
+        <tr><th>Dimension</th><th>Job 1 — Baseline mandatory risk</th><th>Job 2 — Activity-level coverage</th></tr>
+        <tr><td><strong>Functional</strong></td><td>Configure a global rule so no assignment saves with an empty risk field</td><td>Define per-activity mandatory risks, platform validates collective coverage</td></tr>
+        <tr><td><strong>Emotional</strong></td><td>Relief and autonomy — direct control without depending on Service</td><td>Confidence that the most dangerous activities have specific risks documented</td></tr>
+        <tr><td><strong>Social</strong></td><td>Be seen as a rigorous, audit-ready safety manager</td><td>Demonstrate to auditors that risk management is granular and activity-specific</td></tr>
+      </table>
+
+      <p class="sec-h">5. Key value drivers <span style="font-size:10px;color:var(--amber);font-weight:600;margin-left:6px">⚠️ estimates — needs validation</span></p>
+      <table class="minit" style="margin-bottom:16px">
+        <tr><th>Value driver</th><th>Rough estimate</th><th>Status</th></tr>
+        <tr><td><strong>Time saved on contractor chasing</strong></td><td>~20 contractors × 30 min/month × €35/h ≈ <strong>€350/month · €4,200/year per buyer</strong></td><td>⚠️ Estimate</td></tr>
+        <tr><td><strong>Service team time freed</strong></td><td>~5 requests/month × ~1h each [pending Service ops data]</td><td style="color:var(--amber)">Pending</td></tr>
+        <tr><td><strong>Compliance incident risk reduction</strong></td><td>Requires actuarial data</td><td style="color:var(--amber)">Pending</td></tr>
+        <tr><td><strong>Audit readiness</strong></td><td>Reduced audit prep time for regulated sectors — needs client input</td><td style="color:var(--amber)">Pending</td></tr>
+      </table>
+
+      <p class="sec-h">6. Competitive positioning <span style="font-size:10px;color:var(--amber);font-weight:600;margin-left:6px">⚠️ partial — full analysis pending</span></p>
+      <table class="minit" style="margin-bottom:16px">
+        <tr><th>Dimension</th><th>Content</th><th>Status</th></tr>
+        <tr><td><strong>Why us</strong></td><td>Twind is the only platform combining buyer-side config + contractor-side enforcement at assignment time — within the same platform managing the full contract lifecycle</td><td style="color:var(--md)">✅</td></tr>
+        <tr><td><strong>Why now</strong></td><td>CTAIMACAE migration cohort actively requesting. Every month without = churn and expansion risk. Regulatory pressure increasing in Spain.</td><td style="color:var(--md)">✅</td></tr>
+        <tr><td><strong>vs. Dokify / Nalanda / 6conecta</strong></td><td>Competitive gap analysis needed — do they offer buyer-configurable mandatory risk fields?</td><td style="color:var(--amber)">Pending</td></tr>
+        <tr><td><strong>vs. Manual workarounds</strong></td><td>Twind blocks the assignment at platform level. WhatsApp chasing can be ignored. Zero cost workaround loses on reliability, auditability and scale.</td><td style="color:var(--md)">✅</td></tr>
+        <tr><td><strong>vs. CTAIMACAE (legacy)</strong></td><td>Need to confirm exactly what CTAIMACAE supported — critical for migration narrative</td><td style="color:var(--amber)">Pending</td></tr>
+      </table>
+
+      <a class="cf-link" href="https://ctaima.atlassian.net/wiki/spaces/Product/pages/861503489" target="_blank">View in Confluence ↗</a>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">12</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>12 Launch FAQ</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Single source of truth for the GTM team: who to sell to (and who not to), pricing rationale, top objections with responses, AI-related FAQs and a launch readiness checklist.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /p3 -->
+
+
+<!-- ============================== PANEL 4: ADOPTION ============================== -->
+<div class="panel" id="p4">
+  <div class="phase-hd">
+    <div class="ph-badge" style="background:#E0F2FE">📈</div>
+    <div>
+      <h2>Phase 4 — Driving Adoption</h2>
+      <p>Adoption is a core PM responsibility — not a handoff to Sales and CS.</p>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">13</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>13 Metrics &amp; Adoption Dashboard</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Define the outcome chain (user → product → business), leading indicators with concrete action triggers, and AI health metrics — so the team knows exactly when to intervene post-launch.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">14</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>14 Activation Levers</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Adoption plan across three lever types — digital motions, high-touch CS, and product-led — each with concrete triggers that turn the plan into real actions rather than intentions.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /p4 -->
+
+
+<!-- ============================== PANEL 5: ROADMAP ============================== -->
+<div class="panel" id="p5">
+  <div class="phase-hd">
+    <div class="ph-badge" style="background:var(--amber-bg)">🎯</div>
+    <div>
+      <h2>Phase 5 — Roadmap &amp; Outcomes</h2>
+      <p>Audit the roadmap honestly and decide what bet is actually worth making.</p>
+    </div>
+  </div>
+
+  <div class="step pending">
+    <div class="step-hd">
+      <div class="snum">15</div>
+      <div class="stitle">
+        <div class="stitle-top">
+          <h3>15 Evidence Audit &amp; The Bigger Bet</h3>
+          <span class="sbadge pend">Pending</span>
+        </div>
+        <p class="sdesc">Audit the roadmap honestly — classify items as Grounded, Plausible or Other reasons — then decide which of three bets is worth making: Rescoped, Invested or Capability.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /p5 -->
+
+</div><!-- /wrap -->
+
+<script>
+// ── Tabs ──
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => switchTab(t.dataset.panel));
+});
+
+function switchTab(panelId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  const tab = document.querySelector(`.tab[data-panel="${panelId}"]`);
+  const panel = document.getElementById(panelId);
+  if (tab) tab.classList.add('active');
+  if (panel) panel.classList.add('show');
+}
+
+// ── Phase progress rows → navigate to tab ──
+document.querySelectorAll('.ph-row[data-tab]').forEach(row => {
+  row.addEventListener('click', () => {
+    switchTab(row.dataset.tab);
+    document.querySelector('.tabbar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// ── Step accordion (done steps only) ──
+function toggleStep(head) {
+  head.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>
